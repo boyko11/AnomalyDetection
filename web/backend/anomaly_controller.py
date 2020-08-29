@@ -31,7 +31,7 @@ def train_data():
 
 	probabilities_of_records = anomaly_learner.calculate_probability_of_data(three_d_norm_distr_data)
 	train_display_indices = np.argwhere(probabilities_of_records > anomaly_learner.train_records_twentieth_smallest_probability).flatten()
-	train_display_indices = np.random.choice(train_display_indices, 20)
+	train_display_indices = np.random.choice(train_display_indices, 35)
 
 	train_data = three_d_norm_distr_data[train_display_indices, :]
 

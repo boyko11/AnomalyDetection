@@ -1,78 +1,62 @@
-var App = App || {};
-App.service = App.service || {};
-App.service.PlotService = (function() {
+var App = (function() {
 
-	var plot_3D_scatter = function( data ) {
+	let number_test_points_counter = 0
 
-		//credit - https://plotly.com/javascript/3d-scatter-plots/
+	let check_and_render_new_data = function(data) {
 
-		console.log("Data:")
-		console.log(data)
+	if(number_test_points_counter > 20) {
+		return;
+	}
 
-		let train_data = {
-			x: data.train_data.x,
-			y: data.train_data.y,
-			z: data.train_data.z,
-			mode: 'markers',
-			marker: {
-				size: 12,
-				line: {
-					color: 'rgba(217, 217, 217, 0.14)',
-					width: 0.5
-				},
-				opacity: 0.8
-			},
-			type: 'scatter3d'
-		};
+	let data_plus_new_data = data;
+	fetch(`http://127.0.0.1:5000/new_data_point`)
+	   .then(response => response.json())
+	   .then(json => {
+			let new_data_point = json;
+			if (new_data_point.anomaly) {
+				data_plus_new_data.test_data_anomaly.x.push(new_data_point.x);
+				data_plus_new_data.test_data_anomaly.y.push(new_data_point.y);
+				data_plus_new_data.test_data_anomaly.z.push(new_data_point.z);
+			} else {
+				data_plus_new_data.test_data_non_anomaly.x.push(new_data_point.x);
+				data_plus_new_data.test_data_non_anomaly.y.push(new_data_point.y);
+				data_plus_new_data.test_data_non_anomaly.z.push(new_data_point.z);
+			}
 
-		let test_data_anomaly = {
-			x: data.test_data_anomaly.x,
-			y: data.test_data_anomaly.y,
-			z: data.test_data_anomaly.z,
-			mode: 'markers',
-			marker: {
-				size: 12,
-				line: {
-					color: 'rgba(255, 66, 66, 0.14)',
-					width: 0.5
-				},
-				opacity: 0.8
-			},
-			type: 'scatter3d'
-		};
+			App.service.PlotService.plot_3D_scatter(data_plus_new_data);
+			number_test_points_counter++;
 
-		let test_data_non_anomaly = {
-			x: data.test_data_non_anomaly.x,
-			y: data.test_data_non_anomaly.y,
-			z: data.test_data_non_anomaly.z,
-			mode: 'markers',
-			marker: {
-				size: 12,
-				line: {
-					color: 'rgba(152, 231, 126, 0.14)',
-					width: 0.5
-				},
-				opacity: 0.8
-			},
-			type: 'scatter3d'
-		};
+			setTimeout(function() {
+					check_and_render_new_data(data_plus_new_data)
+					console.log('Initial Rendered.')
+			}, 2000);
+	   });
 
-		let plotly_data = [train_data, test_data_anomaly, test_data_non_anomaly];
-		let layout = {
-			margin: {
-				l: 0,
-				r: 0,
-				b: 0,
-				t: 0
-			  }
-		};
 
-		Plotly.newPlot('chart_container', plotly_data, layout);
+	};
+
+	const start = function() {
+
+		fetch(`http://127.0.0.1:5000`)
+		   .then(response => response.json())
+		   .then(json => {
+				data = json;
+				data.test_data_anomaly = { x: [], y: [], z: [] };
+				data.test_data_non_anomaly = { x: [], y: [], z: [] };
+
+				App.service.PlotService.plot_3D_scatter(data);
+
+				setTimeout(function() {
+					check_and_render_new_data(data)
+					console.log('Initial Rendered.')
+				}, 2000);
+
+		   });
 	};
 
 
 	return {
-		plot_3D_scatter: plot_3D_scatter
+		start: start
 	}
 
 })();
