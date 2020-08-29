@@ -36,4 +36,6 @@ class DataService:
 
         rand_data = np.vstack((rand_data, sure_anomalies))
 
+        np.random.shuffle(rand_data)
+
         return rand_data

@@ -8,6 +8,7 @@ class AnomalyDetectionLearner:
         self.means = None
         self.covariance_matrix = None
         self.train_records_fifth_smallest_probability = None
+        self.train_records_twentieth_smallest_probability = None
 
     def train(self, feature_data):
 
@@ -15,6 +16,7 @@ class AnomalyDetectionLearner:
         self.covariance_matrix = np.cov(feature_data.T)
         probabilities_of_records = self.calculate_probability_of_data(feature_data)
         self.train_records_fifth_smallest_probability = np.partition(probabilities_of_records, 4)[4]
+        self.train_records_twentieth_smallest_probability = np.partition(probabilities_of_records, 19)[19]
 
     def calculate_probability_of_data(self, feature_data):
 
