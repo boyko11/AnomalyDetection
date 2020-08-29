@@ -24,7 +24,7 @@ according to the the multivariate normal distribution fit during training,
 this record is considered anomalous.  
 
 ### Example Result from a Test Run
-Light Blue Circle - Training Record
+Light Blue Circle - Training Record  
 Red X  - Random Anomaly  
 Dark Blue Dimond - Random Non-Anomaly  
 ![Multivariate Gauss Anomaly Detection](plots/example.png)
