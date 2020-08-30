@@ -9,7 +9,7 @@ var App = (function() {
 	}
 
 	let data_plus_new_data = data;
-	fetch(`http://127.0.0.1:5000/new_data_point`)
+	fetch(`http://boyko.io:5000/new_data_point`)
 	   .then(response => response.json())
 	   .then(json => {
 			let new_data_point = json;
@@ -37,13 +37,14 @@ var App = (function() {
 
 	const start = function() {
 
-		fetch(`http://127.0.0.1:5000`)
+		fetch(`http://boyko.io:5000`)
 		   .then(response => response.json())
 		   .then(json => {
 				data = json;
 				data.test_data_anomaly = { x: [], y: [], z: [] };
 				data.test_data_non_anomaly = { x: [], y: [], z: [] };
 
+				document.getElementById("loader").remove();
 				App.service.PlotService.plot_3D_scatter(data);
 
 				setTimeout(function() {
