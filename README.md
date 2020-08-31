@@ -27,7 +27,7 @@ this record is considered anomalous.
 Blue Dot - Training Record  
 Red Dot  - Random Anomaly  
 Green Dot - Random Non-Anomaly  
-![Multivariate Gauss Anomaly Detection](plots/example.png)
+![Multivariate Gauss Anomaly Detection](plots/results.png)
 
 ### Web App Simulation    
 At the time of this commit available at:  
