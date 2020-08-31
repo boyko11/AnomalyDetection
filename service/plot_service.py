@@ -27,7 +27,7 @@ class PlotService:
     @staticmethod
     def plot3d_scatter_normal_and_anomalous(normal_data, rand_anomalous_data, rand_non_anomalous_data,
                                             labels=['x', 'y', 'z'], marker1='o',
-                                            marker2='x', marker3='D', color1='#0099ff', color2='r', color3='b',
+                                            marker2='o', marker3='o', color1='#0099ff', color2='r', color3='g',
                                             title='Normal And Anomalous'):
 
         fig = plt.figure()

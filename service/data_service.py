@@ -9,7 +9,7 @@ class DataService:
     @staticmethod
     def generate_random_gaussian_data(dimension_means=[0], cov_matrix=[[1]], num_records=1):
 
-        norm_distr_data = np.random.multivariate_normal(dimension_means, cov_matrix, 100)
+        norm_distr_data = np.random.multivariate_normal(dimension_means, cov_matrix, num_records)
 
         return norm_distr_data
     

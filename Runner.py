@@ -16,9 +16,9 @@ class Runner:
 
         means = [2, 5, 8]
         cov_matrix = [
-            [1, .75, .25],
-            [.75, 2, .5],
-            [.25, .5, 1.5]
+            [  1, .75, .25],
+            [.75,   2,  .5],
+            [.25,  .5, 1.5]
         ]
 
         three_d_norm_distr_data = DataService\
